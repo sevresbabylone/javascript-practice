@@ -1,3 +1,13 @@
+/* Write a program to implement Huffman coding and decoding. It should do the following:
+ - Accept a text message, possibly of more than one line.
+ - Create a Huffman tree for this message.
+ - Create a code table.
+ - Encode the message into binary.
+ - Decode the message from binary back to text.
+If the message is short, the program should be able to display the Huffman tree after creating it.
+You can use String variables to store binary numbers as arrangements of the characters 1 and 0.
+Don’t worry about doing actual bit manipulation unless you really want to. */
+
 function Node (unicodeValue, frequency) {
   this.unicodeValue = unicodeValue
   this.frequency = frequency
@@ -8,7 +18,7 @@ function Node (unicodeValue, frequency) {
 Node.prototype.toString = function () {
   return this.unicodeValue + ' : ' + this.frequency
 }
-// level order traversal display
+
 Node.prototype.levelOrderDisplay = function (root) {
   var queue = []
   queue.push(root)
@@ -44,14 +54,22 @@ Tree.prototype.insertRec = function (newNode, newRoot) {
   return newRoot
 }
 
-Tree.prototype.getSuccessor = function () {
+// Tree.prototype.getCharacterCodes = function (root) {
+//   var characterCodes = {}
+//   return this.getCharacterCodesRecur(root, '', characterCodes)
+// }
+//
+// Tree.prototype.getCharacterCodesRecur = function (node, leafPathCode, characterCodes) {
+//   if (node.leftChild === null && node.rightChild === null) { // base case: it's a leaf
+//     characterCodes[node.unicodeValue] = leafPathCode
+//     return characterCodes
+//   } else {
+//     this.getCharacterCodesRecur(node.leftChild, leafPathCode + '0', characterCodes)
+//     this.getCharacterCodesRecur(node.rightChild, leafPathCode + '1', characterCodes)
+//   }
+// }
 
-}
-Tree.prototype.delete = function () {
-
-}
-
-// array based PriorityQueue
+// Array-based PriorityQueue
 // smallest frequency (highest priority) ->> highest frequency (lowest priority)
 function PriorityQueue () {
   this.queueArray = []
@@ -87,39 +105,55 @@ var message = 'SSI ASEEYS I IS ASYTU.'
 // Part 1: Creating the Huffman tree
 
 // Collect frequencies into 1 object
-var characters = message.split('').reduce(function (dictionary, currentValue) {
-  if (dictionary.hasOwnProperty(currentValue)) {
-    dictionary[currentValue]++
+var dictionary = message.split('').reduce(function (accumulator, currentValue) {
+  if (accumulator.hasOwnProperty(currentValue)) {
+    accumulator[currentValue]++
   } else {
-    dictionary[currentValue] = 1
+    accumulator[currentValue] = 1
   }
-  return dictionary
+  return accumulator
 }, {})
 
 // Make a Tree object for each of the nodes
 // Insert these trees in a PriorityQueue
 var treePriorityQueue = new PriorityQueue()
-for (var character in characters) {
-  if (characters.hasOwnProperty(character)) {
+for (var character in dictionary) {
+  if (dictionary.hasOwnProperty(character)) {
     var newTree = new Tree()
-    newTree.insert(new Node(character, characters[character]))
+    newTree.insert(new Node(character, dictionary[character]))
     treePriorityQueue.insert(newTree.root)
   }
 }
-// insert this new tree into priority PriorityQueue
-// repeat until there is only 1 tree left in PriorityQueue
+// Insert this new tree into priority PriorityQueue
+// Repeat until there is only 1 tree left in PriorityQueue
 while (treePriorityQueue.queueArray.length > 1) {
-  // remove (first) 2 roots from the PriorityQueue, make them into children of a new node in a new tree
+  // Remove (first) 2 roots from the PriorityQueue, then make them into children of a new node in a new tree
   var first = treePriorityQueue.remove()
   var second = treePriorityQueue.remove()
   var combinedTree = new Tree()
-  // new node has frequency that is the sum of the childrens frequencies, character field is null
+  // New node has frequency that is the sum of the childrens frequencies, character field is null
   var newNode = new Node(null, first.frequency + second.frequency)
   newNode.leftChild = first
   newNode.rightChild = second
   combinedTree.insert(newNode)
   treePriorityQueue.insert(combinedTree.root)
 }
+// Part 2: Create Huffman code table
 
-// Part 2: Encoding the message
-// Part 3: Decoding the message
+function getCharacterCodes (root) {
+  var characterCodes = {}
+  function getCharacterCodesRecur (node, leafPathCode) {
+    if (node.leftChild === null && node.rightChild === null) { // base case: it's a leaf
+      characterCodes[node.unicodeValue] = leafPathCode
+    } else {
+      getCharacterCodesRecur(node.leftChild, leafPathCode + '0')
+      getCharacterCodesRecur(node.rightChild, leafPathCode + '1')
+    }
+  }
+  getCharacterCodesRecur(root, '')
+  return characterCodes
+}
+console.log(getCharacterCodes(treePriorityQueue.queueArray[0]))
+
+// Part 3: Encoding the message
+// Part 4: Decoding the message
