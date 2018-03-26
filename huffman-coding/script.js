@@ -85,7 +85,7 @@ PriorityQueue.prototype.display = function () {
   })
 }
 
-var message = 'SSI ASEEYS I IS ASYTU.'
+var message = 'SUSIE SAYS IT IS EASY.'
 
 // Part 1: Creating the Huffman tree
 
@@ -141,9 +141,33 @@ function getCharacterCodes (root) {
 }
 var huffmanTable = getCharacterCodes(treePriorityQueue.queueArray[0])
 
-// Part 3: Encoding the message
+// Part 3: Encoding the message.
+
 var encodedMessage = message.split('').map(function (character) {
   return huffmanTable[character]
 }).join('')
-console.log(encodedMessage)
+
 // Part 4: Decoding the message
+
+function decodeHuffman (message, root) {
+  var decodedMessage = ''
+  var currentNode = root
+  // traverse the tree
+  var character = message.shift()
+  while (message.length > 0) {
+    while (currentNode.leftChild !== null && currentNode.rightChild !== null) {
+      if (character === '0') {
+        currentNode = currentNode.leftChild
+      } else {
+        currentNode = currentNode.rightChild
+      }
+      character = message.shift()
+    }
+    decodedMessage = decodedMessage + currentNode.unicodeValue
+    currentNode = root
+  }
+  return decodedMessage
+}
+
+console.log(encodedMessage)
+console.log(decodeHuffman(encodedMessage.split(''), treePriorityQueue.queueArray[0]))
