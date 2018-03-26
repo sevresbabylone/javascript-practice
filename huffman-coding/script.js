@@ -54,21 +54,6 @@ Tree.prototype.insertRec = function (newNode, newRoot) {
   return newRoot
 }
 
-// Tree.prototype.getCharacterCodes = function (root) {
-//   var characterCodes = {}
-//   return this.getCharacterCodesRecur(root, '', characterCodes)
-// }
-//
-// Tree.prototype.getCharacterCodesRecur = function (node, leafPathCode, characterCodes) {
-//   if (node.leftChild === null && node.rightChild === null) { // base case: it's a leaf
-//     characterCodes[node.unicodeValue] = leafPathCode
-//     return characterCodes
-//   } else {
-//     this.getCharacterCodesRecur(node.leftChild, leafPathCode + '0', characterCodes)
-//     this.getCharacterCodesRecur(node.rightChild, leafPathCode + '1', characterCodes)
-//   }
-// }
-
 // Array-based PriorityQueue
 // smallest frequency (highest priority) ->> highest frequency (lowest priority)
 function PriorityQueue () {
@@ -138,6 +123,7 @@ while (treePriorityQueue.queueArray.length > 1) {
   combinedTree.insert(newNode)
   treePriorityQueue.insert(combinedTree.root)
 }
+
 // Part 2: Create Huffman code table
 
 function getCharacterCodes (root) {
@@ -153,7 +139,11 @@ function getCharacterCodes (root) {
   getCharacterCodesRecur(root, '')
   return characterCodes
 }
-console.log(getCharacterCodes(treePriorityQueue.queueArray[0]))
+var huffmanTable = getCharacterCodes(treePriorityQueue.queueArray[0])
 
 // Part 3: Encoding the message
+var encodedMessage = message.split('').map(function (character) {
+  return huffmanTable[character]
+}).join('')
+console.log(encodedMessage)
 // Part 4: Decoding the message
