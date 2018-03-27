@@ -152,19 +152,12 @@ var encodedMessage = message.split('').map(function (character) {
 function decodeHuffman (message, root) {
   var decodedMessage = ''
   var currentNode = root
-  // traverse the tree
-  var character = message.shift()
-  while (message.length > 0) {
-    while (currentNode.leftChild !== null && currentNode.rightChild !== null) {
-      if (character === '0') {
-        currentNode = currentNode.leftChild
-      } else {
-        currentNode = currentNode.rightChild
-      }
-      character = message.shift()
+  for (var i = 0; i < message.length; i++) {
+    currentNode = message[i] === '0' ? currentNode.leftChild : currentNode.rightChild
+    if (currentNode.leftChild === null && currentNode.rightChild === null) {
+      decodedMessage = decodedMessage + currentNode.unicodeValue
+      currentNode = root
     }
-    decodedMessage = decodedMessage + currentNode.unicodeValue
-    currentNode = root
   }
   return decodedMessage
 }
