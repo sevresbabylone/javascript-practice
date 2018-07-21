@@ -1,3 +1,8 @@
+// Input: Array A of length n representing binary digits of an integer,
+//        Array B of length n representing binary digits of an integer
+//
+// Output: Array C of lenght n + 1 representing binary digits of A + B
+
 function addition (a, b) {
   var c = []
   var carry = 0
