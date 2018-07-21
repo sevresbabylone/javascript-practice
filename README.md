@@ -14,7 +14,7 @@ Don’t worry about doing actual bit manipulation unless you really want to.
 - Write a program that translates expressions from infix to postfix
 ## Sorting
 - [ ] Bubble
-- [ ] Selection
+- [x] Selection
 - [x] Insertion
 - [ ] Shellsort
 - [x] Quicksort
