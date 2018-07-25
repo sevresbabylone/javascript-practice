@@ -10,23 +10,41 @@
 // and then copying the remainder of the other array back into A.
 
 function merge (A, p, q, r) {
-  var L = A.slice(p, q)
-  var R = A.slice(q + 1, r)
-  var indexL = 0
-  var indexR = 0
-  for (var i = p; i <= r; i++) {
-    if (L[indexL] < R[indexR]) {
-      A[i] = L[indexL]
-      indexL++
+  var L = A.slice(p, q + 1)
+  var R = A.slice(q + 1, r + 1)
+  var remainingArray
+  var pointer = p
+  while (pointer <= r) {
+    if (L[0] < R[0]) {
+      A[pointer] = L.shift()
     } else {
-      A[i] = R[indexR]
-      indexR++
+      A[pointer] = R.shift()
     }
+    pointer++
+    if (L.length === 0) {
+      remainingArray = R
+      break
+    }
+    if (R.length === 0) {
+      remainingArray = L
+      break
+    }
+  }
+  while (pointer <= r) {
+    A[pointer] = remainingArray.shift()
+    pointer++
   }
 }
 
-function mergeSort () {
-
+function mergeSort (A, p, r) {
+  if (p < r) {
+    var q = Math.floor((p + r) / 2)
+    mergeSort(A, p, q)
+    mergeSort(A, q + 1, r)
+    merge(A, p, q, r)
+  }
 }
 
-console.log(mergeSort([9, 7, 5, 11, 12, 2, 14, 3, 10, 6]))
+var unsortedArray = [9, 7, 5, 11, 12, 2, 14, 3, 10, 6]
+mergeSort(unsortedArray, 0, unsortedArray.length - 1)
+console.log(unsortedArray)
