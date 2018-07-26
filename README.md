@@ -17,6 +17,7 @@ Don’t worry about doing actual bit manipulation unless you really want to.
 - [x] Selection
 - [x] Insertion
 - [ ] Shellsort
+- [x] Mergesort
 - [x] Quicksort
 - [ ] Heapsort
 - [ ] Radixsort
