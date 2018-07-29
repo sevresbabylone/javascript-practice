@@ -1,13 +1,13 @@
 # Programming Projects
 
-- Write a program to implement Huffman coding and decoding. It should do the following:
-   - Accept a text message, possibly of more than one line.
-   - Create a Huffman tree for this message.
-   - Create a code table.
-   - Encode the message into binary.
-   - Decode the message from binary back to text.
+Write a program to implement Huffman coding and decoding. It should do the following:
+- Accept a text message, possibly of more than one line.
+- Create a Huffman tree for this message.
+- Create a code table.
+- Encode the message into binary.
+- Decode the message from binary back to text.
 
- If the message is short, the program should be able to display the Huffman tree after creating it.
+If the message is short, the program should be able to display the Huffman tree after creating it.
 You can use String variables to store binary numbers as arrangements of the characters 1 and 0.
 Don’t worry about doing actual bit manipulation unless you really want to.
 

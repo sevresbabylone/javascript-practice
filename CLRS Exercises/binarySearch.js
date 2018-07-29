@@ -11,4 +11,8 @@
 // Input: Array of integers A, Integer Key
 // Output: Index of matching Key in Array A, if not found -1
 
-// binarySearch(A, key)
+// binarySearch(A, key, midpoint)
+// base case: FOUND
+// base case: NOT FOUND
+// binarySearch()
+// binarySearch()
