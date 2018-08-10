@@ -1,3 +1,6 @@
+// Input: Array of integers A, Integer Key
+// Output: Index of matching Key in Array A, if not found -1
+
 function binarySearch (A, left, right, key) {
   while (left <= right) {
     var midpoint = Math.floor(left + (right - left) / 2)
