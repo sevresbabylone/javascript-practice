@@ -1,0 +1,32 @@
+{
+  "name": "cyclicdirectedtest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "App.js",
+  "scripts": {
+    "test": "nyc mocha --require babel-polyfill --require babel-register",
+    "build": "babel src -d lib",
+    "clean": "rm -r lib",
+    "start": "npm run clean && npm run build && node src/App.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "mocha-sinon": "^2.1.0",
+    "nyc": "^13.0.1"
+  },
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  }
+}
