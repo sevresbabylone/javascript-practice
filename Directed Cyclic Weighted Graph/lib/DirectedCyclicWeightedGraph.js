@@ -4,13 +4,6 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// Input: An array of strings denoting first node, second node and weight of edge. i.e. [AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7]
-// Expected Output: if no such route exists: 'NO SUCH ROUTE'.
-// The distance of the route A-B-C.
-// The distance of the route A-D.
-// The distance of the route A-D-C.
-// The distance of the route A-E-B-C-D.
-// The distance of the route A-E-D.
 // The number of trips starting at C and ending at C with a maximum of 3 stops.
 // The number of trips starting at A and ending at C with exactly 4 stops.
 // The length of the shortest route (in terms of distance to travel) from A to C.
@@ -107,11 +100,24 @@ var DirectedCyclicWeightedGraph = function () {
     }
     // Takes an array of vertices to visit in order i.e. ['A', 'B', 'C']
     // if path exists, returns value of total distance
-    // if path does not exist, returns 'null'
+    // if path does not exist, throw error NO SUCH ROUTE, then return null
 
   }, {
     key: 'getDistanceOfSpecificRoute',
-    value: function getDistanceOfSpecificRoute(pathArray) {}
+    value: function getDistanceOfSpecificRoute(pathArray) {
+      var totalDistance = 0;
+      for (var i = 1; i < pathArray.length; i++) {
+        var startIndex = this.getIndex(pathArray[i - 1]);
+        var endIndex = this.getIndex(pathArray[i]);
+        var weight = this.adjacencyMatrix[startIndex][endIndex];
+        if (weight === undefined) return null;
+        totalDistance += this.adjacencyMatrix[startIndex][endIndex];
+      }
+      return totalDistance;
+    }
+  }, {
+    key: 'getNoOfRoutesWithMaximumNumberOfStops',
+    value: function getNoOfRoutesWithMaximumNumberOfStops(start, end, maxStops) {}
   }]);
 
   return DirectedCyclicWeightedGraph;

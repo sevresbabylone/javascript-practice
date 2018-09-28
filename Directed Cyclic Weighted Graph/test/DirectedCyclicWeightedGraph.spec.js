@@ -3,7 +3,6 @@ const Vertex = require('../src/Vertex.js')
 
 const assert = require('chai').assert
 const expect = require('chai').expect
-const sinon = require('sinon')
 
 describe('Directed Cyclic Weighted Graph', function () {
   describe('Constructor', function () {
@@ -88,9 +87,18 @@ describe('Directed Cyclic Weighted Graph', function () {
   it('displays adjacencyMatrix correctly', () => {
 
   })
-  it('returns correct distance of specified route', () => {
+  it('returns distance of specified route', () => {
     var dcwGraph = new DirectedCyclicWeightedGraph()
-    dcwGraph.populateGraph('Graph: AB1, BC2, CD3, DC4, CB5, BA6')
-    
+    dcwGraph.populateGraph('Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7')
+    expect(dcwGraph.getDistanceOfSpecificRoute(['A', 'B', 'C'])).to.equal(9)
+    expect(dcwGraph.getDistanceOfSpecificRoute(['A', 'D'])).to.equal(5)
+    expect(dcwGraph.getDistanceOfSpecificRoute(['A', 'D', 'C'])).to.equal(13)
+    expect(dcwGraph.getDistanceOfSpecificRoute(['A', 'E', 'B', 'C', 'D'])).to.equal(22)
+    expect(dcwGraph.getDistanceOfSpecificRoute(['A', 'E', 'D'])).to.equal(null)
+  })
+  it('returns number of routes between two vertices with a specified maximum number of stops', () => {
+    var dcwGraph = new DirectedCyclicWeightedGraph()
+    dcwGraph.populateGraph('Graph: AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7')
+    expect(dcwGraph.getNoOfRoutesWithMaximumNumberOfStops('C', 'C', 2)).to.equal(2)
   })
 })

@@ -73,8 +73,39 @@ class DirectedCyclicWeightedGraph {
   // if path exists, returns value of total distance
   // if path does not exist, throw error NO SUCH ROUTE, then return null
   getDistanceOfSpecificRoute (pathArray) {
-
+    var totalDistance = 0
+    for (var i = 1; i < pathArray.length; i++) {
+      var startIndex = this.getIndex(pathArray[i - 1])
+      var endIndex = this.getIndex(pathArray[i])
+      var weight = this.adjacencyMatrix[startIndex][endIndex]
+      if (weight === undefined) return null
+      totalDistance += this.adjacencyMatrix[startIndex][endIndex]
+    }
+    return totalDistance
+  }
+  // bfs but with a maximum depth of maxStops, if currentVertex is end, increment noOfRoutes
+  getNoOfRoutesWithMaximumNumberOfStops (start, end, maxStops) {
+    currentVertex = 0
+    var adjacentVertex
+    var noOfRoutes = 0
+    var indexQueue = [this.getIndex(start)]
+    // if index queue is not empty
+    while (!indexQueue.length === 0) {
+      currentVertex = indexQueue.shift()
+        indexQueue.concat(getAllAdjacentVertexes(currentVertex))
+      }
+    }
+    return noOfRoutes
+  }
+  findEndVertex (currentVertex, end, depth) {
+    return
   }
 }
+
+
+// start at c
+//
+
+  break;
 
 module.exports = DirectedCyclicWeightedGraph
